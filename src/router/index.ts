@@ -72,6 +72,16 @@ const router = createRouter({
       name:'News',
       component:()=>import('@/views/news/index.vue')
     },
+    {
+      path:'/user/addressList',
+      name:'AddressList',
+      component:()=>import('@/views/user/address/addressList.vue')
+    },
+    {
+      path:'/user/addressEdit',
+      name:'AddressEdit',
+      component:()=>import('@/views/user/address/addressEdit.vue')
+    },
 
     {
       path: '/404',

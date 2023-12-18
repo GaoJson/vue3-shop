@@ -45,5 +45,4 @@ export default useUserStore
 export interface UserInfo {
 	avatarUrl:string
 	nickName:string
-
 }

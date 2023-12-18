@@ -77,7 +77,7 @@ function handFileUpload(res: any) {
 
 
 <template>
-    <van-nav-bar left-arrow title="安全设置" @click-left="router.back" />
+    <van-nav-bar  title="安全设置" left-arrow @click-left="router.back" />
 
     <img :src="fileInput" />
 

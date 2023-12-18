@@ -12,6 +12,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@vant/area-data": "^1.5.1",
     "ali-oss": "^6.17.1",
     "autoprefixer": "^10.4.14",
     "axios": "^1.4.0",

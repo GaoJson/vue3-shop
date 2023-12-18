@@ -13,6 +13,8 @@ import { ref, onMounted } from "vue";
 import { createRequest } from "@/util/request/request";
 import { useRouter } from "vue-router";
 import { uploadProduct } from "@/util/upload_product";
+import useShopCarStore from "@/store/modules/shopcar";
+import { showToast } from "vant";
 
 const iconList = ref<Recordable>([]);
 
@@ -156,11 +158,9 @@ function goodsSort(id: any) {
   router.push({path:'goods/sort',query:{"data":JSON.stringify(params),"index":idx}});
 }
 
-function addShopcar() {
-  alert("点击")
-  event.stopPropagation();
-      
-
+function addShopcar(item:Recordable) {
+  useShopCarStore().saveShopcar(item)
+  showToast("添加成功")
 }
 
 </script>
@@ -349,13 +349,12 @@ function addShopcar() {
                 
 
               <van-row style="padding-left: 10px;margin-top: 10px;padding-right: 10px;" justify="space-between">
-
                   <van-row >
                   <div style="padding: 3px 8px 3px 8px;background-color: #000;color:white;font-size: 12px;font-weight: 400;">贡献值</div>
                   <div style="padding: 3px 8px 3px 8px;background: linear-gradient(#F5CB81, #FBE8B9); color: #000;font-size: 12px;font-weight: 400;">{{toDouble(item.contributeValue)}}</div>  
                   </van-row>
                 
-                  <img @click.prevent="addShopcar()" style="width: 25px;height: 25px;" :src="getAssetsUrl('images/my/shopcats.png')">
+                  <img @click.stop="addShopcar(item)" style="width: 25px;height: 25px;" :src="getAssetsUrl('images/my/shopcats.png')">
               </van-row>
            
               

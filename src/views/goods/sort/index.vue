@@ -10,6 +10,9 @@ import { onMounted } from 'vue';
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import API_GOODS from "@/apis/goods";
+import { getAssetsUrl } from '@/util/asset_path';
+import useShopCarStore from '@/store/modules/shopcar';
+import { showToast } from 'vant';
 
 const route = useRoute();
 const router = useRouter();
@@ -84,6 +87,11 @@ function goodDetail(id: any) {
   router.push({ path: '/goods/detail', query: { id } })
 }
 
+function addShopcar(item:Recordable) {
+  useShopCarStore().saveShopcar(item)
+  showToast("添加成功")
+}
+
 </script>
 
 
@@ -134,13 +142,17 @@ function goodDetail(id: any) {
                   <div style="color: gray;font-size: 10px;padding-right: 5px;">{{ item.saleCount }}人已付款</div>
                 </van-row>
 
-                <van-row style="padding-left: 10px;margin-top: 10px;">
-                  <div
+                <van-row style="padding-left: 10px;margin-top: 10px;margin-right: 8px;" justify="space-between">
+                  <van-row>
+                    <div
                     style="padding: 3px 8px 3px 8px;background-color: #000;color:white;font-size: 12px;font-weight: 400;">
                     贡献值</div>
                   <div
                     style="padding: 3px 8px 3px 8px;background: linear-gradient(#F5CB81, #FBE8B9); color: #000;font-size: 12px;font-weight: 400;">
                     {{ parseFloat(item.contributeValue) }}</div>
+                  </van-row>
+
+                    <img @click.stop="addShopcar(item)" style="width: 25px;height: 25px;" :src="getAssetsUrl('images/my/shopcats.png')">
                 </van-row>
               </div>
             </van-col>

@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import useUserStore from '@/store/modules/user';
 import { getAssetsUrl } from '@/util/asset_path';
+import storage from 'good-storage';
 
 import {showToast } from 'vant';
 import { ref } from 'vue';
@@ -41,11 +42,12 @@ function loginSumit() {
         user.userName = account.value
         user.password = password.value
         user.nickName = account.value
-        user.avatarUrl = "https://profile-avatar.csdnimg.cn/bf597b4c16134ceda0620465fde01f8a_gaojson.jpg"
+        user.avatarUrl = "https://atts.w3cschool.cn/attachments/cover/cover_vantlesson.png"
         list[account.value] = user
-        
-
         useUserStore().storageUserList(JSON.stringify(list))
+        storage.set('token', account.value)
+            useUserStore().token = account.value;
+            router.replace({ path: '/user' })
     } else {
         showToast("账号已经注册")
     } 

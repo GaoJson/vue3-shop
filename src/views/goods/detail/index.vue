@@ -5,6 +5,8 @@ import { createRequest } from "@/util/request/request";
 import { onMounted } from 'vue';
 import { ref } from 'vue';
 import { watch } from 'vue';
+import useShopCarStore from '@/store/modules/shopcar';
+import { showToast } from 'vant';
 const route = useRoute();
 const router = useRouter();
 
@@ -36,7 +38,7 @@ watch(goodsCount,(newValue)=>{
 // net
 function loadData() {
     createRequest("goods/v1/" + route.query.id, "get", {}).then((res) => {
-        console.log(res);
+        
         goodsDetail.value = res.data;
         var banner: string = res.data.goodsBanner;
         bannerList.value = banner.split(",");
@@ -58,8 +60,11 @@ function buyAction() {
         showModal.value = true;
         return;
     }
+}
 
-
+function addShopcar() {
+  useShopCarStore().saveShopcar(goodsDetail.value)
+  showToast("添加成功")
 }
 
 </script>
@@ -138,8 +143,6 @@ function buyAction() {
         style="border-radius: 10px;padding: 3px;top: 20px;left: 20px; position:fixed;color: white;background-color: rgba(0, 0, 0, 0.47);"
         name="arrow-left"></van-icon>
 
-
-
     <div>
         <van-overlay :style="{ height: modelHeight }" :show="showModal" @click="showModal = false">
             <div class="spac" @click.stop>
@@ -195,6 +198,11 @@ function buyAction() {
             <van-col style="margin: auto;margin-left: 10px;text-align: center;margin-top: 5px;">
                 <van-icon style="margin: auto;padding: 0;" size="20px" name="service-o" />
                 <div style="font-size: 10px;padding: 0;">客服</div>
+            </van-col>
+
+            <van-col @click="addShopcar" style="margin: auto;margin-left: 10px;text-align: center;margin-top: 5px;">
+                <van-icon style="margin: auto;padding: 0;" size="20px" name="shopping-cart-o" />
+                <div style="font-size: 10px;padding: 0;">加入购物车</div>
             </van-col>
 
             <van-button @click="buyAction"

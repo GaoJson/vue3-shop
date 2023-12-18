@@ -40,6 +40,11 @@ function loginSumit() {
     });
 }
 
+function gotoRegist(){
+    router.push({path:"/user/regist"})
+
+}
+
 </script>
 
 
@@ -61,6 +66,9 @@ function loginSumit() {
         <van-button v-bind:loading="logining" @click="loginSumit" style="" size="large" loadingText="登录中..."
             round>登录</van-button>
     </div>
+
+    <div @click="gotoRegist" style="margin-left: auto;margin-right: auto;margin-top: 10px;text-align: center;color: #fb740c;">暂无账号？去登录</div>
+
 </template>
 
 <style scoped lang="less">
