@@ -12,6 +12,7 @@ import { useUserStore } from '@/store/modules/user';
 import { getAssetsUrl } from '@/util/asset_path';
 import { onActivated } from 'vue';
 import { onMounted } from 'vue';
+import { OrderModel } from '@/store/modules/orderModel';
 
 const router = useRouter()
 const userStore = useUserStore();
@@ -35,8 +36,8 @@ onActivated(()=>{
 function onRefresh(){
     isLoading.value = false
     userInfo.value = userStore.userData()
-    orderInfo.value = [0,0,0,0]
-
+    OrderModel.getModel
+    orderInfo.value = OrderModel.getOrderState()
 }
 
 function loginAction() {
@@ -57,7 +58,12 @@ function itemClickAction(title:String) {
     if (title == "我的地址") {
         router.push("/user/addressList");
     }
-    
+}
+
+function gotoOrder(state:number) {
+    if (useUserStore().isLogin) {
+        router.push({path:"/order/orderList",query:{state:state}})
+    }
 }
 
 </script>
@@ -98,7 +104,7 @@ function itemClickAction(title:String) {
 
         <van-row justify="space-between" >
             <div style="font-weight: bold;">我的订单</div>
-            <van-row style="margin-top: 5px;">
+            <van-row @click="gotoOrder(0)" style="margin-top: 5px;">
                 <div style="font-size: 12px;color: gray;line-height: 15px;">全部订单</div>
                 <van-icon name="arrow" />
             </van-row>
@@ -106,25 +112,25 @@ function itemClickAction(title:String) {
 
         <van-row
             style="margin-top: 10px">
-            <van-col style="text-align: center;" span="6" >
+            <van-col @click="gotoOrder(1)" style="text-align: center;" span="6" >
                 <van-badge :content="orderInfo[0]?orderInfo[0]:undefined">
                     <van-image style="width: 31px;height: 25px;" :src="getAssetsUrl('images/my/ic_my_order_1.png')"/>
                 </van-badge>
                 <div style="font-size: 12px;">待支付</div>
             </van-col>
-            <van-col style="text-align: center;" span="6">
+            <van-col @click="gotoOrder(2)" style="text-align: center;" span="6">
                 <van-badge :content="orderInfo[1]?orderInfo[1]:undefined">
                     <van-image style="width: 31px;height: 25px;" :src="getAssetsUrl('images/my/ic_my_order_2.png')"/>
                 </van-badge>
                 <div style="font-size: 12px;">待发货</div>
             </van-col>
-            <van-col style="text-align: center;" span="6">
+            <van-col @click="gotoOrder(3)" style="text-align: center;" span="6">
                 <van-badge :content="orderInfo[2]?orderInfo[2]:undefined">
                     <van-image style="width: 31px;height: 25px;" :src="getAssetsUrl('images/my/ic_my_order_3.png')"/>
                 </van-badge>
                 <div style="font-size: 12px;">待收货</div>
             </van-col>
-            <van-col style="text-align: center;" span="6">
+            <van-col @click="gotoOrder(4)" style="text-align: center;" span="6">
                 <van-badge :content="orderInfo[3]?orderInfo[3]:undefined">
                     <van-image style="width: 31px;height: 25px;" :src="getAssetsUrl('images/my/ic_my_order_4.png')"/>
                 </van-badge>

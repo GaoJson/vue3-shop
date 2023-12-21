@@ -1,8 +1,14 @@
 <script setup lang="ts">
+
 import useShopCarStore, { ShopcarModel } from '@/store/modules/shopcar';
+import { showToast } from 'vant';
 import { onMounted } from 'vue';
+
 import { ref } from 'vue';
 import { onActivated } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 const editText = ref("编辑")
 const editFlag = ref(false)
@@ -20,9 +26,10 @@ function toDouble(value: string): any {
 }
 
 onActivated(() => {
-
-
+    list.value = useShopCarStore().getShopcar()
+    countPriceAction()
 })
+
 onMounted(() => {
     list.value = useShopCarStore().getShopcar()
     countPriceAction()
@@ -75,6 +82,23 @@ function deleteAction(){
     countPriceAction()
 }
 
+function gotoPay() {
+    var str = new String("");
+    var index = 0
+    list.value.forEach(element => {
+        if (element.selectFlag == true) {
+            str = str.concat(`${index?"-":""}${element.id.toString()}`)
+            index ++
+        }
+    });
+    if (index == 0) {
+        showToast("请选择商品")
+    } else {
+        router.push({path:"/order/shopOrder",query:{data:str.toString()}})
+    }
+   
+}
+
 </script>
 
 <template>
@@ -82,6 +106,7 @@ function deleteAction(){
         @click-right="rightAction"></van-nav-bar>
 
     <van-list style="padding-top: var(--van-nav-bar-height);padding-bottom: var(--van-tabbar-height);">
+        <van-empty v-show="list.length == 0" description="暂无数据" />
         <van-col v-for="model in list">
             <van-row style="padding: 5px;background-color: white;margin-top: 1px;">
                 <div style="width: 5px;"></div>
@@ -121,7 +146,7 @@ function deleteAction(){
             </van-row>
 
             <van-row>
-                <van-button v-if="!editFlag" style="height: 30px;background-color: red;color: white;margin-top: 5px;margin-right: 10px;" round>去结算(0)</van-button>
+                <van-button @click="gotoPay" v-if="!editFlag" style="height: 30px;background-color: red;color: white;margin-top: 5px;margin-right: 10px;" round>去结算(0)</van-button>
                 <van-button @click="deleteAction" v-if="editFlag" style="height: 30px;background-color: orange;color: white;margin-top: 5px;margin-right: 10px;" round>删除</van-button>
             </van-row>
 

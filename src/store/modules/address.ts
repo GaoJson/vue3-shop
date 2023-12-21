@@ -67,7 +67,7 @@ export class AddressModel {
                 dataList.push(element)
             }
         });
-        return list
+        return dataList
     }
     static getModel(id:number):AddressModel {
         var json = storage.get("address","[]")

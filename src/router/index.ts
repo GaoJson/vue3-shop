@@ -82,7 +82,21 @@ const router = createRouter({
       name:'AddressEdit',
       component:()=>import('@/views/user/address/addressEdit.vue')
     },
-
+    {
+      path:'/order/shopOrder',
+      name:'ShopOrder',
+      component:()=>import('@/views/order/shopOrder.vue')
+    },
+    {
+      path:'/order/orderList',
+      name:'OrderList',
+      component:()=>import('@/views/order/order_list.vue')
+    },
+    {
+      path:'/order/orderDetail',
+      name:'OrderDetail',
+      component:()=>import('@/views/order/order_detail.vue')
+    },
     {
       path: '/404',
       component: () => import('@/views/exception/404.vue'),

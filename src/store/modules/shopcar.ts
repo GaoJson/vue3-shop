@@ -15,11 +15,12 @@ export class ShopcarModel {
     count:number = 1
 
     static toData(params:Recordable):ShopcarModel {
+        console.log(params)
         var model = new ShopcarModel()
         model.goodsImg = params.goodsImg
         model.goodsName = params.goodsName
         model.goodsPrice = params.goodsPrice
-        model.spec = params.spec
+        model.spec = "默认"
         model.selectFlag = true
         model.shopId = params.id
         model.userId = params.userId
@@ -39,6 +40,22 @@ export const useShopCarStore = defineStore("shopcar",{
                 if(element.userId == useUserStore().getToken) {
                     dataList.push(element)
                 }
+            });
+            return dataList
+        },
+
+        getShopcarbyId(ids:Array<string>):Array<ShopcarModel> {
+            let mySet = new Set();
+            ids.forEach(element => {
+               mySet.add(element) 
+            });
+            var json = storage.get("shopcar","[]")
+            var list:Array<ShopcarModel> = JSON.parse(json)
+            var dataList:Array<ShopcarModel> = []
+            list.forEach(element => {
+               if (mySet.has(element.id.toString())){
+                dataList.push(element)
+               }
             });
             return dataList
         },

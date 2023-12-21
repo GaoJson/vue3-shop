@@ -5,7 +5,7 @@ import { createRequest } from "@/util/request/request";
 import { onMounted } from 'vue';
 import { ref } from 'vue';
 import { watch } from 'vue';
-import useShopCarStore from '@/store/modules/shopcar';
+import useShopCarStore, { ShopcarModel } from '@/store/modules/shopcar';
 import { showToast } from 'vant';
 const route = useRoute();
 const router = useRouter();
@@ -38,8 +38,13 @@ watch(goodsCount,(newValue)=>{
 // net
 function loadData() {
     createRequest("goods/v1/" + route.query.id, "get", {}).then((res) => {
+        console.log(res);
         
         goodsDetail.value = res.data;
+         var spec:Array<Recordable> = res.data.specVos
+        goodsDetail.value.goodsPrice = spec[0].goodsPrice
+        goodsDetail.value.originalPrice = spec[0].oriPrice
+        goodsDetail.value.spec = spec[0].spec
         var banner: string = res.data.goodsBanner;
         bannerList.value = banner.split(",");
         goodsContent.value = res.data.goodsContent;
@@ -63,7 +68,8 @@ function buyAction() {
 }
 
 function addShopcar() {
-  useShopCarStore().saveShopcar(goodsDetail.value)
+    
+  useShopCarStore().saveShopcar(ShopcarModel.toData(goodsDetail.value))
   showToast("添加成功")
 }
 

@@ -6,7 +6,7 @@ export function createRequest<T = any>(path:string,method:string,param:any):Prom
 
 
     const service: AxiosInstance = axios.create({
-        baseURL:"https://api.yuehaigj.com/api/",
+        baseURL:"https://api.renrenyingfa.com/api/",
         timeout:10*1000,
         headers:{"Content-Type":ContentType.FORM_DATA}
     }

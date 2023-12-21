@@ -6,6 +6,9 @@ import { ChatModel, MsgType, InputMenuType } from "@/views/chat/interface/chat_m
 import { Ref } from 'vue';
 import { listenKeybord } from "@/util/inputUtil";
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const chatList = ref<ChatModel[]>([]);
 
@@ -61,7 +64,6 @@ function keydowns(e: any) {
         var faceData = text.match(facePattern);
         if (faceData) {
             faceData.forEach(e => {
-                console.log("111")
                 var imgSrc = e.replace("[", "").replace("]", "");
                 var face = "images/face/" + imgSrc + ".gif";
                 text = text.replace(e, "<image style='width:18px;height:18px' src=" + getAssetsUrl(face) + ">")
@@ -201,7 +203,7 @@ function srcOnClick(data1: number, data2: string) {
 
 
 <template>
-    <van-nav-bar style="position: fixed;width:min(100%,480px)" title="聊天"></van-nav-bar>
+    <van-nav-bar left-arrow @click-left="router.back"  style="position: fixed;width:min(100%,480px)" title="聊天"></van-nav-bar>
 
     <div ref="content" :style="{ paddingBottom: chatBottomHeight() }" style="padding-top: 40px;" class="container">
         <div   v-for="item in chatList">

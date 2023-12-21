@@ -20,7 +20,7 @@ function enterChatPage(){
 
 
 <template>
-    <van-nav-bar style="position: fixed;width:min(100%,480px)" title="聊天"></van-nav-bar>
+    <van-nav-bar  style="position: fixed;width:min(100%,480px)" title="聊天"></van-nav-bar>
   
     <div style="padding-top:var(--van-nav-bar-height);" class="chat">
     <van-col>

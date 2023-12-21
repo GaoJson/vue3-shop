@@ -6,7 +6,7 @@ import { useRoute } from 'vue-router';
 import { ref } from 'vue';
 import router from '@/router';
 import { showToast } from 'vant';
-import { onActivated } from 'vue';
+
 
 const route = useRoute()
 
@@ -24,10 +24,8 @@ function loadData() {
   }
 }
 loadData()
-onActivated(()=>{
-  console.log("onActivatedonActivated")
-  loadData()
-})
+
+
 
 
 function onSave(ele:Recordable){

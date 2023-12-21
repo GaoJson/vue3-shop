@@ -26,9 +26,7 @@ function addAction(){
 }
 
 onActivated(()=>{
-  console.log("onActivatedonActivated")
   list.value = AddressModel.getList()
-
 })
 
 </script>
